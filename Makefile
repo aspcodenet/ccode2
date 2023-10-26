@@ -1,5 +1,5 @@
 PROG = main.exe 
-SRC = main.c
+SRC = main.c safeinput.c
 CFLAGS = -g
 LIBS = 
 
