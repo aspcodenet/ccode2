@@ -1,12 +1,99 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+#include <stdlib.h> 
 #include "safeinput.h"
+
+
+// 1. STRUCT
+// 2. Arrayer med tex ints
+// 3. Arrayer med char - dvs "string"
+// 4. Arrayer med structar
+// 5. Dynamiska arrayer
+
+typedef struct {
+    int birthYear;
+    int monthlySalary;
+    char namn[100];
+} Employee;
+
+
+void changeSalary(Employee *employee){ //address -> 1000
+    printf("Now %s has %d as montly salary\nEnter a new salary:",
+        employee->namn, employee->monthlySalary);
+    int temp;
+    scanf(" %d",&temp);
+    employee->monthlySalary = temp;
+    //scanf(" %d",&employee.monthlySalary);
+}
+
+void changeInt(int *i){
+    *i = 12;
+}
+
+
+void enterEmployee(Employee *employee){ //address -> 1000
+    GetInput("Enter name:", employee->namn,100);
+    GetInputInt("Enter salary:", &employee->monthlySalary);
+    GetInputInt("Enter birthyear:", &employee->birthYear);
+}
+
+
+
+void structsDemo(){
+
+    // int massaTal[3];
+    // massaTal[0] = 12;
+    // massaTal[1] = 1;
+    // massaTal[2] = 33;
+    char namn[100];
+    namn[0] = 'H';
+    namn[1] = 'e';
+    namn[2] = 'j';
+    namn[3] = 0;
+
+    strcpy(namn, "Hej");
+    printf("%d\n",namn);
+    int i;
+    Employee allaEmployees[3];
+
+    Employee *empPointer = malloc(sizeof(Employee));
+    enterEmployee(empPointer);
+
+    free(empPointer);
+    
+
+    for(int i = 0;i < 3; i++){
+        enterEmployee(&allaEmployees[i]);
+        // Employee e;
+        // enterEmployee(&e);
+        // allaEmployees[i] = e;
+    }
+
+    // string s = "hej";
+    // s += " hopp";
+
+    // ArrayList a
+    // a.add()
+
+    Employee employee;
+    employee.birthYear = 1972;
+    employee.monthlySalary = 20000;
+    //employee.namn = "Stefan";
+    strcpy(employee.namn, "Stefan");
+    changeSalary(&employee);
+    printf("%s earns %d\n", employee.namn, employee.monthlySalary);
+
+}
+
 
 /*
 stringcompare
 strncmp
 */
+
 int main() {
+    structsDemo();
     char text[255];
     while(GetInput("Ange namn",text,sizeof(text)) != INPUT_RESULT_OK){
         printf("Ogiltig input...try again");
