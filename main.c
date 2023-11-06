@@ -2,311 +2,160 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h> 
+#include <ctype.h>
 #include "safeinput.h"
 
 
-// 1. STRUCT
-// 2. Arrayer med tex ints
-// 3. Arrayer med char - dvs "string"
-// 4. Arrayer med structar
-// 5. Dynamiska arrayer
-
-typedef struct {
-    int birthYear;
-    int monthlySalary;
-    char namn[100];
-} Employee;
-
-
-void changeSalary(Employee *employee){ //address -> 1000
-    printf("Now %s has %d as montly salary\nEnter a new salary:",
-        employee->namn, employee->monthlySalary);
-    int temp;
-    scanf(" %d",&temp);
-    employee->monthlySalary = temp;
-    //scanf(" %d",&employee.monthlySalary);
-}
-
-void changeInt(int *i){
-    *i = 12;
-}
-
-
-void enterEmployee(Employee *employee){ //address -> 1000
-    GetInput("Enter name:", employee->namn,100);
-    GetInputInt("Enter salary:", &employee->monthlySalary);
-    GetInputInt("Enter birthyear:", &employee->birthYear);
-}
-
-
-
-void structsDemo(){
-
-    // int massaTal[3];
-    // massaTal[0] = 12;
-    // massaTal[1] = 1;
-    // massaTal[2] = 33;
-    char namn[100];
-    namn[0] = 'H';
-    namn[1] = 'e';
-    namn[2] = 'j';
-    namn[3] = 0;
-
-    strcpy(namn, "Hej");
-    printf("%d\n",namn);
-    int i;
-    Employee allaEmployees[3];
-
-    Employee *empPointer = malloc(sizeof(Employee));
-    enterEmployee(empPointer);
-
-    free(empPointer);
-    
-
-    for(int i = 0;i < 3; i++){
-        enterEmployee(&allaEmployees[i]);
-        // Employee e;
-        // enterEmployee(&e);
-        // allaEmployees[i] = e;
-    }
-
-    // string s = "hej";
-    // s += " hopp";
-
-    // ArrayList a
-    // a.add()
-
-    Employee employee;
-    employee.birthYear = 1972;
-    employee.monthlySalary = 20000;
-    //employee.namn = "Stefan";
-    strcpy(employee.namn, "Stefan");
-    changeSalary(&employee);
-    printf("%s earns %d\n", employee.namn, employee.monthlySalary);
-
-}
-
-
 /*
-stringcompare
-strncmp
+
+1. Strängar (smärta)
+
+2. Efter lunch
+Labbar Strängar + 
+
+Alla som inte har fått till GCC:
+https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0mcf-16.0.6-11.0.1-ucrt-r2/winlibs-x86_64-mcf-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r2.zip
 */
 
-int main() {
-    structsDemo();
-    char text[255];
-    while(GetInput("Ange namn",text,sizeof(text)) != INPUT_RESULT_OK){
-        printf("Ogiltig input...try again");
+
+int strCompareCaseInsensitive(char *str1, const char *str2){
+    //loopar igenom str1 -> uppercase på alla 
+    for(int i = 0; i < strlen(str1);i++){
+        str1[i] = toupper(str1[i]);
     }
-    printf("Du heter %s\n",text);
+    // strcmp
+    return strcmp(str1,str2);
+}
 
 
+int main(){
+    char email[30];
+    strcpy(email, "hejsan@hoppsan.se");
+    // '@'finns det ett sånt tecken
+    // @hejsan.se, hejsan.aaaaaa.se@
 
-//     unsigned  short int shoeSize = 123; // 0-65535
-//     // int TAL 0-4miljarder
-//     // char TAL 0-255
-//     char test1 = 123;
-//     test1 = test1 + 2;
-//     printf("%d\n", test1);
+    char *substring = strchr(email, '@'); // 6
+    printf("%s", substring);
 
-//     test1 = 65;
-//     printf("%c  %d\n", test1, test1);
+    int position = substring - email;
+    printf("Positionen var %d\n", position);
 
+//     char exit[30];
+//     while(1){
+//         printf("The game\n");
+//         //fråga vill du spela igen Ja
+//         GetInput("Vill du spela igen",exit,30);
+//         if(strcmp(exit, "Ja") == 0){
+//             continue;
+//         }
+//         break;
+//         // if(!strcmp(exit, "Ja")){
+//         //     continue;
+//         // }
 
-//     char ch = 'A';
-//     char ch = 65;
-//     printf("%c %d\n", ch, ch);
-
-//     ch = ch + 1;
-//     char realShoeSize = 12;
-
-//     ch = 255;
-//     ch = ch + 1; // ch++
-//     printf("%c %d\n", (int)ch, ch);
-
-    
-//     // int -> 4 bytes
-//     //signed int shoeSize = 44; // -2miljader -> +2 miljarder
-// //    int shoeSize = 44; // -2miljader -> +2 miljarder
-// //    unsigned int showSize3 = 33; // 0 -> 4 miljarder
-
-//     //shoeSize = -100;
-
-//     // // short int -> 2 bytes
-//     // short int shoeSize2 = 43; // -32768 -> 32787
-//     // long int billGatesMoney = 23112312323312;
-
-//     // shoeSize = 1233123;
-
-
-
-
-//     float test = 123.123;
-//     int year = 1972;
-//     while( year <= 1980 ){
-//         printf("%d\n", year);
-//         year++;  
-//     }
-
-//     for(int year = 1972;year <= 1980;year++){
-//         printf("%d\n", year);
-//     }
-
-
-
-//     int playMore;
-//     do{
-//         //SPELET
-//         printf("Nu startar spelet\n");
-//         printf("Nu slutar spelet\n");
-
-//         printf("Vill du sluta skriv 0 annars 1:");
-//         scanf(" %d", &playMore);
-//     }while(playMore == 1);
-
-
-//     while(true){
-//         //SPELET
-//         printf("Nu startar spelet\n");
-//         printf("Nu slutar spelet\n");
-
-//         printf("Vill du sluta skriv 0 annars 1:");
-//         int playAgain;
-//         scanf(" %d", &playAgain);
-//         if(playAgain == 0){
+//         // annars inte spela igen
+//         if(strCompareCaseInsensitive(exit, "JA")){
 //             break;
 //         }
+//         // int compareValue = strcmp(exit, "Ja");
+//         // if(compareValue != 0){
+//         //     break;
+//         // }
+
+//         // int compareValue = strcmp(exit, "Ja");
+//         // if(compareValue != 0){
+//         //     break;
+//         // }
+
 //     }
 
-    
-//     int playAgain = 1;
-//     while( playAgain == 1){
-//         //SPELET
-//         printf("Nu startar spelet\n");
-//         printf("Nu slutar spelet\n");
-
-//         printf("Vill du sluta skriv 0 annars 1:");
-//         scanf(" %d", &playAgain);
-//     }
-
-
-
-    
-//     while(true){
-//         printf("Hockey är kul\n");
-//     }
-//     while(1){
-//         printf("Hockey är kul\n");
-//     }
-//     for(;;){
-//         printf("Hockey är kul\n");
-//     }
-
-
-
-
-
-//     // INT på pc = 4 bytes
-//     // INT arduino  = 2 bytes
-//     // signed int
-
-//     // signed    
-//     // -2miljarder -> +2miljarder
-//     //unsigned int birthYear = 1972;
-//     // unsigned    
-//     // 0 -> 4miljarder
-
-
-
-//     // short int birthYear2 = 1972;
-
-//     // //int shoeSize = 123123123;
-
-
-
-
-
-//     // int x = 2;
-//     // switch (x){
-//     //     case 1: 
-//     //         printf("1");
+//     // while(1){
+//     //     printf("The game\n");
+//     //     //fråga vill du spela igen Ja
+//     //     GetInput("Vill du spela igen",exit,30);
+//     //     // annars inte spela igen
+//     //     if(exit == "Ja"){
 //     //         break;
-//     //     case 2: 
-//     //         printf("2");
-//     //         break;
-//     //     default: 
-//     //         printf("Annat");
-//     //         break;
-//     // }
-
-
-//     // int n = 2;
-//     // if(n == 0){
-//     //     printf("0");
-//     // }
-//     // else if(n == 1){
-//     //     printf("1");
-//     // }
-//     // else if(n == 2){
-//     //     printf("2");
-//     // }
-//     // else if(n == 3){
-//     //     printf("3");
-//     // }
-//     // else if(n == 4){
-//     //     printf("4");
-//     // }
-//     // else if(n == 5){
-//     //     printf("5");
-//     // }else{
-//     //     printf("Nåt annat");
-//     // }
-
-
-
-
-
-
-//     // if(n != 0){
-//     //     printf("N var sant");
-//     // }else{
-//     //     printf("N var falskt");
-//     // }
-//     // bool isCool = false;
-//     // if(isCool){
+//     //     }
 
 //     // }
-//     // // int i ;
-//     // // short int;
-//     // // long int;
-//     // // long long int;
-//     // // float f;
-//     // // double d;
-//     // // char ch;
-
-//     // //String name;
-//     // //int stefansSalary = 25000;
-//     // char name[10];
-//     // // assdsdadasasddasasds
-//     // scanf(" %s", name);
-//     // int year;
-//     // scanf(" %d", &year);
 
 
-//     // int birthYear = 13;
-//     // birthYear = birthYear + 1;
-//     // birthYear += 1;
-//     // birthYear++;
 
-//     // birthYear = 12;
-//     // // mata in ett namn
+//     //Vad är en sträng
+//     // vi tilldelar en sträng - buffer och pekare 
+//     char namn[30];
+//     int i = 12;
+//     // int ages[12];
+//     // ages[0] = 12;
+//     // ages[1] = 12;
+// //    namn = "Stefan";
+//     // namn[0] = 'S';
+//     // namn[1] = 't';
+//     // namn[2] = 'e';
+//     // namn[3] = 'f';
+//     // namn[4] = 'a';
+//     // namn[5] = 'n';
+//     // namn[6] = 0;
+//     strcpy(namn, "Stefan Holmberg"); //Kopierar in till  början
+//     printf("%s\n", namn);
+//     //namn = "Stefan";
+//     int i = 12;
+//     char *team = "Sweden";
+//     printf("%s\n", team);
 
-//     // // skriva det
+//     //namn = namn + team;
+//     //vi slår ihop två strängar
+//     strcat(namn,","); // kopierar in allt till slutet
+//     strcat(namn,team); // kopierar in allt till slutet
+//     printf("%s\n", namn);
+//     //printf("%s,%s\n", namn,team);
 
-//     // int year;
-//     // year = 1972; // this is the year
-//     // float percent = 0.2f;
-//     // printf("Hello you were born %d it seems and you have %.2f percent discount \n", 
-//     //     year, percent);
+//     // vi loopar igenom och räknar hur många 'a'
+//     // loopa igenom en string = tills den tar slut (\0)
+//     int length = strlen(namn); // inte hur mycket som är paxat utan hur LÅNG den är
+//     int antalA = 0;
+//     for(int i = 0; i < length; i++){
+//         char thisChar = namn[i];
+//         if(thisChar == 'a'){
+//             antalA++;
+//         }
+//         //printf("%c", thisChar);
+//     }
+//     printf("Det var %d antal 'a':nn", antalA );
+
+
+//     int antalA = 0;
+//     for(int i = 0; i < strlen(namn); i++){
+//         char thisChar = namn[i];
+//         if(thisChar == 'a'){
+//             antalA++;
+//         }
+//         //printf("%c", thisChar);
+//     }
+
+//     int antalStora = 0;
+//     for(int i = 0; i <strlen(namn);i++){
+//         if(isupper(namn[i])){
+//              antalStora++;
+//         }
+//         // bool isUpperCase = isupper(namn[i]);
+//         // if(isUpperCase == true){
+//         //     antalStora++;
+//         // }
+//     }
+
+
+
+
+
+//     //vi loopar igenom och räknar stora bokstäver
+//     // vi jämför strängar om playAgain == "Yes" ?? 
+//     //vi ändrar en sträng
+//     //vi ändrar en sträng så det blir uppercase/lowercase
+//     //vi letar efter ett tecken i en sträng
+//     //vi letar efter en substräng i en sträng
+//     //TISDAG:  vi splittar en sträng hej;hopp;whatever
+
     return 0;
 }
