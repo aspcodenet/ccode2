@@ -1,7 +1,7 @@
 PROG = main.exe 
 SRC = main.c safeinput.c
 CFLAGS = -g
-LIBS = 
+LIBS =
 
 all: $(PROG)
 

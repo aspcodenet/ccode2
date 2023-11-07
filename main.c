@@ -27,8 +27,85 @@ int strCompareCaseInsensitive(char *str1, const char *str2){
     return strcmp(str1,str2);
 }
 
+typedef struct{
+    char namn[255];
+    int jerseyNumber;
+    char team[255];
+} PLAYER;
+
+// CSV
+
+// 1. strtok
+
+// 2. arrayer/structar malloc/realloc
+//       REGISTER "lista" med hockeyspelare, skapa ny/ändra/ta bort
+
+// 3. genomgång/start inlämningsuppgift
+
+
+void test(){
+    int a = 12;
+    PLAYER *p1 = (PLAYER *) malloc(sizeof(PLAYER));
+    // later
+    free(p1);
+}
 
 int main(){
+    test();
+    //SAKER SOM HAR MALLOKERATS/REALLOKERATS
+    // MÅSTE frigöras med free()
+    // ha en List<PLAYER> 
+    // listan.add
+    int count = 0;
+    PLAYER *lista;
+    while(1){
+        printf("1. Skapa ny spelare\n");
+        printf("2. Change spelare\n");
+        printf("3. Lista alla\n");
+        printf("8. Exit\n");
+        int sel;
+        GetInputInt("Ange val:",&sel);
+        if(sel == 1){
+            if(count == 0){
+                lista = (PLAYER *)malloc(sizeof(PLAYER));
+                count++;
+            }else{
+                //
+                count++;
+                lista = (PLAYER *)realloc(lista, sizeof(PLAYER) * count);
+            }
+            char namn[256];
+            GetInput("Ange namn",namn,256);
+            strcpy(lista[count-1].namn,namn);
+            //GetInput("Ange namn",lista[count-1].namn,256);
+        }else if(sel == 3){
+            for(int i = 0; i < count;i++){
+                printf("%s\n", lista[i].namn);
+            }
+        }else if(sel == 2){
+            printf("Change player\n");
+            for(int i = 0; i < count;i++){
+                printf("%d. %s\n", i+1, lista[i].namn);
+            }
+            int playerSelection;
+            GetInputInt("Select player number:",&playerSelection);
+            printf("You wanna change name:%s", lista[playerSelection-1].namn);
+            GetInput("Nytt namn:",lista[playerSelection-1].namn,256);
+        }
+
+
+    }
+    char stringen[255];
+    strcpy(stringen, "Stefan,Holmberg,51,Nacka");
+
+
+    char *token = strtok(stringen, ",");
+    while( token != NULL ) {
+        printf( " %s\n", token );
+        token = strtok(NULL, ",");
+    }
+
+
     char email[30];
     strcpy(email, "hejsan@hoppsan.se");
     // '@'finns det ett sånt tecken
